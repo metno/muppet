@@ -25,8 +25,8 @@ data files. If mutation is necessary, the destination file should be copied to
 a scratch area first, where the mutation will happen. Then, upon successful
 completion, the file can be atomically moved back.
 
-For steps that generate specific files, their scratch space filename and output
-filename should be provided by MUPPET itself.
+Each step will have its own scratch space. MUPPET will allocate the scratch
+space and put the path in an environment variable.
 
 ## Synchronization between storage systems
 
@@ -35,8 +35,9 @@ simultaneously, without consuming too many resources. Therefore, as each file
 is persisted to the storage backend, it should be synchronized across the other
 storage systems as well.
 
-How should this be implemented? How should errors be handled? IPFS or similar
-mechanisms?
+Using a new `muppet` command line utility? Upon production of a file on either
+storage backends, a call to the command-line utility might analyze the file,
+add it to MUPPET's database, and duplicate it across file systems.
 
 ## Concurrency and parallelism
 
