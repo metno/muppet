@@ -28,3 +28,9 @@ type Job struct {
 const (
 	NEW = iota // Job is created, but hasn't been scheduled.
 )
+
+func New() Job {
+	return Job{
+		envVars: make(map[string]string, 0),
+	}
+}
