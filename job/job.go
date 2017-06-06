@@ -11,17 +11,17 @@ import (
 // activated, all jobs for the pipeline are created, according to how much data
 // is expected.
 type Job struct {
-	id          uuid.UUID          // Unique identifier for this job.
-	pipeline    *pipeline.Pipeline // Which pipeline this job originates from.
-	step        *step.Step         // Which step this job originates from.
-	status      int                // Status code of the job, defined in the Status* constants.
-	stdout      string             // Unix STDOUT output from the job.
-	stderr      string             // Unix STDERR output from the job.
-	successor   *Job               // If this job failed, successor is a reference to the next retry.
-	predecessor *Job               // If this job previously failed, predecessor is a reference to the previous try.
-	failures    int                // Number of times this series of jobs has failed.
-	command     string             // Shell command to run.
-	envVars     map[string]string  // Environment variables to pass to the executor.
+	ID          uuid.UUID          // Unique identifier for this job.
+	Pipeline    *pipeline.Pipeline // Which pipeline this job originates from.
+	Step        *step.Step         // Which step this job originates from.
+	Status      int                // Status code of the job, defined in the Status* constants.
+	Stdout      string             // Unix STDOUT output from the job.
+	Stderr      string             // Unix STDERR output from the job.
+	Successor   *Job               // If this job failed, successor is a reference to the next retry.
+	Predecessor *Job               // If this job previously failed, predecessor is a reference to the previous try.
+	Failures    int                // Number of times this series of jobs has failed.
+	Command     string             // Shell command to run.
+	EnvVars     map[string]string  // Environment variables to pass to the executor.
 }
 
 // Job status codes.
@@ -32,7 +32,7 @@ const (
 // New returns a new Job object.
 func New() Job {
 	return Job{
-		id:      uuid.NewV4(),
-		envVars: make(map[string]string, 0),
+		ID:      uuid.NewV4(),
+		EnvVars: make(map[string]string, 0),
 	}
 }

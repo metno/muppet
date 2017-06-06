@@ -6,7 +6,9 @@ import "github.com/metno/muppet/job"
 // MAX_QUEUE is the maximum number of jobs that can be queued in the I/O buffers.
 const MAX_QUEUE int = 4096
 
-// Database implements persistence for jobs. The channel `In` receives job data that should be persisted to the database, while the `Out` channel sends
+// Database implements persistence for jobs. The channel `In` receives job data
+// that should be persisted to the database, while the `Out` channel sends
+// objects that have already been persisted.
 type Database struct {
 	In  chan job.Job
 	Out chan job.Job
