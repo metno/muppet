@@ -33,6 +33,6 @@ const (
 func New() Job {
 	return Job{
 		ID:      uuid.NewV4(),
-		EnvVars: make(map[string]string, 0),
+		EnvVars: make(map[string]string),
 	}
 }
