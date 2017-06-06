@@ -29,6 +29,7 @@ const (
 	NEW = iota // Job is created, but hasn't been scheduled.
 )
 
+// New returns a new Job object.
 func New() Job {
 	return Job{
 		id:      uuid.NewV4(),

@@ -32,7 +32,7 @@ func (db *Database) Run() {
 }
 
 // persist stores an object in the database. This function must never fail, so
-// if persistance fails, it must be retried until success.
+// if persistence fails, it must be retried until success.
 // FIXME: jobs are not persisted, figure out a database backend to use.
 func (db *Database) persist(j job.Job) {
 }
