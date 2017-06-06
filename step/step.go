@@ -3,13 +3,13 @@ package step
 
 import (
 	"github.com/metno/muppet/pipeline"
-	"github.com/metno/muppet/types"
+	uuid "github.com/satori/go.uuid"
 )
 
 // Step is a node in the pipeline. A step can have parents and children, and
 // fans in and out.
 type Step struct {
-	id          types.UUID         // Unique identifier for this step.
+	id          uuid.UUID          // Unique identifier for this step.
 	pipeline    *pipeline.Pipeline // Which pipeline the step is in.
 	conflicts   []*Step            // Any steps that conflicts with this step are automatically excluded.
 	parents     []*Step            // Parent steps for predecession or fan-in.

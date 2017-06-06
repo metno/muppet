@@ -4,14 +4,14 @@ package job
 import (
 	"github.com/metno/muppet/pipeline"
 	"github.com/metno/muppet/step"
-	"github.com/metno/muppet/types"
+	uuid "github.com/satori/go.uuid"
 )
 
 // Job is an instance of a pipeline step. When the first step in a pipeline is
 // activated, all jobs for the pipeline are created, according to how much data
 // is expected.
 type Job struct {
-	id          types.UUID         // Unique identifier for this job.
+	id          uuid.UUID          // Unique identifier for this job.
 	pipeline    *pipeline.Pipeline // Which pipeline this job originates from.
 	step        *step.Step         // Which step this job originates from.
 	status      int                // Status code of the job, defined in the Status* constants.
@@ -31,6 +31,7 @@ const (
 
 func New() Job {
 	return Job{
+		id:      uuid.NewV4(),
 		envVars: make(map[string]string, 0),
 	}
 }
