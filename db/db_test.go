@@ -2,6 +2,7 @@ package db_test
 
 import (
 	"testing"
+	"time"
 
 	"github.com/metno/muppet/db"
 	"github.com/metno/muppet/job"
@@ -16,10 +17,14 @@ func TestEcho(t *testing.T) {
 		j := job.New()
 		db.In <- j
 	}
+
+	// Receive all messages from the DB channel, but wait at most 1 second.
+	timeout := time.After(1 * time.Second)
 	for i := 0; i < max; i++ {
 		select {
 		case <-db.Out:
-		default:
+		case <-timeout:
+			t.Logf("Not enough data available on output queue.")
 			t.Fail()
 		}
 	}
