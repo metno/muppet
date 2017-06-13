@@ -30,21 +30,31 @@ space and put the path in an environment variable.
 
 ## Synchronization between storage systems
 
-It is imperative that files are being produced on several file systems
-simultaneously, without consuming too many resources. Therefore, as each file
-is persisted to the storage backend, it should be synchronized across the other
-storage systems as well.
+It is imperative that files are widely available across several file systems.
 
-Using a new `muppet` command line utility? Upon production of a file on either
-storage backends, a call to the command-line utility might analyze the file,
-add it to MUPPET's database, and duplicate it across file systems.
+File synchronization might take place as a BitTorrent network. Data consumers -
+such as THREDDS and MET API - would run customized BitTorrent clients,
+configured to retrieve the most recent files from Lustre. BitTorrent might also
+help with load distribution in the network.
+
+In order to know which files will be distributed, we need an index of
+operational files. Such an index exists today:
+[Productstatus](https://github.com/metno/productstatus). The design, speed, and
+API of Productstatus could be improved in order to support thousands of queries
+per second.
+
+File registration could be facilitated by a new command line utility. After
+files are produced, the utility would scan the file, and send its metadata to
+Productstatus for indexing.
 
 ## Concurrency and parallelism
 
 ### Database thread
 
 Responsible for database transactions. Receives pipeline, step, and job object
-updates via Go channels, and writes updated information to the database backend.
+updates via Go channels, and writes updated information to the database
+backend. It must handle database transactions and be ACID compliant, in order
+to reduce the amount of potential bugs associated with bad state.
 
 ### Cron thread
 
